@@ -5,7 +5,6 @@ AgoraRTC.setLogLevel(3)
 async function init () {
     // Client Setup
     console.log('init')
-    console.time('init')
     // Defines a client for RTC
     const client = AgoraRTC.createClient({ mode: "rtc", codec: "vp8" });
 
@@ -16,7 +15,7 @@ async function init () {
     let uid = parseInt(query.get('uid')!);
     let display = query.get('display') || false;
     console.log('query', 'appId', appId, 'channelId', channelId, 'uid', uid)
-    
+    console.time(`ch: ${channelId} duration`)
     // Create local tracks
     const [localAudioTrack, localVideoTrack] = await AgoraRTC.createMicrophoneAndCameraTracks();
     
@@ -26,9 +25,10 @@ async function init () {
     // Join a channnel and retrieve the uid for local user
     await client.join(appId, channelId, null, uid);
     await client.publish([localAudioTrack, localVideoTrack]);
-    console.log(new Date())
-    console.log(new Date().getTime());
-    console.timeEnd("init");
+    // console.log(new Date())
+    // console.log("Channel:", channelId);
+    console.log("ch:", channelId,  new Date().getTime(), );
+    console.timeEnd(`ch: ${channelId} duration`);
 };
 
 // document.onload = ()=>init();
