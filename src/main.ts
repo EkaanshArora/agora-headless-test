@@ -1,10 +1,11 @@
 import AgoraRTC from 'agora-rtc-sdk-ng';
 
-// AgoraRTC.setLogLevel(3)
+AgoraRTC.setLogLevel(3)
 
 async function init () {
     // Client Setup
     console.log('init')
+    console.time('init')
     // Defines a client for RTC
     const client = AgoraRTC.createClient({ mode: "rtc", codec: "vp8" });
 
@@ -25,6 +26,9 @@ async function init () {
     // Join a channnel and retrieve the uid for local user
     await client.join(appId, channelId, null, uid);
     await client.publish([localAudioTrack, localVideoTrack]);
+    console.log(new Date())
+    console.log(new Date().getTime());
+    console.timeEnd("init");
 };
 
 // document.onload = ()=>init();
